@@ -1,6 +1,8 @@
 /* eslint-disable no-console */
 const BASE_URL = 'http://localhost:7890';
 
+// User auth/redirect functions
+
 export async function signUpUser(userInfo) {
     const res = await fetch(`${BASE_URL}/api/v1/users`, {
         method: 'POST',
@@ -58,5 +60,22 @@ export async function redirectIfLoggedIn() {
     const user = await getUser();
     if (user) {
         location.replace('./tasks');
+    }
+}
+
+// Fetch task functions
+
+export async function getTasks() {
+    const res = await fetch(`${BASE_URL}/api/v1/todos`, {
+        method: 'GET',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        }, 
+        credentials: 'include'
+    });
+    if (res.ok) {
+        const tasks = await res.json();
+        return tasks;
     }
 }
