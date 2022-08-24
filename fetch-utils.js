@@ -38,3 +38,25 @@ export async function signInUser(userInfo) {
         console.error(data.message);
     }
 }
+
+export async function getUser() {
+    const res = await fetch(`${BASE_URL}/api/v1/users/me`, {
+        method: 'GET',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+    });
+    if (res.ok) {
+        const user = await res.json();
+        return user;
+    }
+}
+
+export async function redirectIfLoggedIn() {
+    const user = await getUser();
+    if (user) {
+        location.replace('./tasks');
+    }
+}

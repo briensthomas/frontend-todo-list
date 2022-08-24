@@ -1,5 +1,5 @@
 // import functions and grab DOM elements
-import { signInUser, signUpUser } from './fetch-utils.js';
+import { redirectIfLoggedIn, signInUser, signUpUser } from './fetch-utils.js';
 const signUpForm = document.getElementById('sign-up');
 const signInForm = document.getElementById('sign-in');
 // let state
@@ -28,3 +28,5 @@ signInForm.addEventListener('submit', async (e) => {
         password: formData.get('password')
     });
 });
+
+redirectIfLoggedIn();
