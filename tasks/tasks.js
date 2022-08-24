@@ -1,27 +1,51 @@
-import { getTasks, getUser } from '../fetch-utils';
+import { addTask, getTasks, checkUser } from '../fetch-utils.js';
 
-const taskListEl = document.getElementById('task-list');
+const taskSectionEl = document.getElementById('task-section');
+const taskForm = document.getElementById('task-form');
+
+let tasks = [];
+
+
 
 async function onLoad() {
-    const user = await getUser();
-    if (!user) location.replace('../');
-    
+    checkUser();
+    tasks = await getTasks();
     displayTasks();
 }
 
 async function renderTasks(task) {
-    const li = document.createElement('li');
-    li.textContent = `${task.detail}`;
-    return li;
+    const div = document.createElement('div');
+    const p = document.createElement('p');
+    p.textContent = `${task.detail}`;
+
+    const createdAt = document.createElement('span');
+    createdAt.textContent = `${task.created_at}`;
+
+    const span = document.createElement('span'); 
+    span.textContent = `${task.status ? true === '✔' : '⬛'}`;
+    
+    div.append(p, createdAt, span);
+    return div;
 }
 
 async function displayTasks() {
-    const tasks = await getTasks();
-    
+    taskSectionEl.textContent = '';
+
     for (let task of tasks) {
-        const taskList = renderTasks(task);
-        taskListEl.append(taskList);
+        const taskList = await renderTasks(task);
+        taskSectionEl.append(taskList);
     }
 }
+
+taskForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = new FormData(taskForm);
+    const newTask = await addTask({
+        detail: data.get('detail')
+    });
+    onLoad();
+    tasks.push(newTask);
+    taskForm.reset();
+});
 
 onLoad();

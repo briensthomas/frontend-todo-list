@@ -56,6 +56,11 @@ export async function getUser() {
     }
 }
 
+export async function checkUser() {
+    const user = await getUser();
+    if (!user) location.replace('../');
+}
+
 export async function redirectIfLoggedIn() {
     const user = await getUser();
     if (user) {
@@ -77,5 +82,21 @@ export async function getTasks() {
     if (res.ok) {
         const tasks = await res.json();
         return tasks;
+    }
+}
+
+export async function addTask(taskInfo) {
+    const res = await fetch(`${BASE_URL}/api/v1/todos`, {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-type': 'application/json',
+        },
+        body: JSON.stringify(taskInfo),
+        credentials: 'include',
+    });
+    if (res.ok) {
+        const task = await res.json();
+        return task;
     }
 }
