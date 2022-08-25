@@ -1,4 +1,4 @@
-import { addTask, getTasks, checkUser, updateTask } from '../fetch-utils.js';
+import { addTask, getTasks, checkUser, updateTask, deleteTask } from '../fetch-utils.js';
 
 const taskSectionEl = document.getElementById('task-section');
 const taskForm = document.getElementById('task-form');
@@ -16,7 +16,18 @@ async function onLoad() {
 
 async function renderTasks(task) {
     const div = document.createElement('div');
+    div.classList.add('notification');
+
+    const deleteButton = document.createElement('button');
+    deleteButton.classList.add('delete');
+    deleteButton.addEventListener('click', async (e) => {
+        e.preventDefault();
+        await deleteTask(task.id);
+        onLoad();
+    });
+
     const p = document.createElement('p');
+    p.classList.add('message-body');
     p.textContent = `${task.detail}`;
 
     const createdAt = document.createElement('span');
@@ -30,7 +41,7 @@ async function renderTasks(task) {
         onLoad();
     });
     
-    div.append(p, createdAt, spanStatus);
+    div.append(spanStatus, p, deleteButton, createdAt);
     return div;
 }
 

@@ -115,3 +115,18 @@ export async function updateTask(id, status) {
         const task = await res.json();
         return task;
     }}
+
+export async function deleteTask(id) {
+    const res = await fetch(`${BASE_URL}/api/v1/todos/${id}`, {
+        method: 'DELETE',
+        headers: {
+            Accept: 'application/json',
+            'Content-type': 'application/json',
+        },
+        credentials: 'include',
+    });
+    if (res.ok) {
+        const task = await res.json();
+        return task;
+    }
+}
