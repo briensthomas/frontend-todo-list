@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 const BASE_URL = 'https://brien-todo-list.herokuapp.com';
 
-// User auth/redirect functions
+// User auth/redirect functions //
 
 export async function signUpUser(userInfo) {
     const res = await fetch(`${BASE_URL}/api/v1/users`, {
