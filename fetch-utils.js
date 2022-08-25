@@ -100,3 +100,18 @@ export async function addTask(taskInfo) {
         return task;
     }
 }
+
+export async function updateTask(id, status) {
+    const res = await fetch(`${BASE_URL}/api/v1/todos/${id}`, {
+        method: 'PUT',
+        headers: {
+            Accept: 'application/json',
+            'Content-type': 'application/json',
+        },
+        body: JSON.stringify(status),
+        credentials: 'include',
+    });
+    if (res.ok) {
+        const task = await res.json();
+        return task;
+    }}

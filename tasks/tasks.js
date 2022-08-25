@@ -1,7 +1,8 @@
-import { addTask, getTasks, checkUser } from '../fetch-utils.js';
+import { addTask, getTasks, checkUser, updateTask } from '../fetch-utils.js';
 
 const taskSectionEl = document.getElementById('task-section');
 const taskForm = document.getElementById('task-form');
+// const greeting = document.getElementById('greeting');
 
 let tasks = [];
 
@@ -21,10 +22,15 @@ async function renderTasks(task) {
     const createdAt = document.createElement('span');
     createdAt.textContent = `${task.created_at}`;
 
-    const span = document.createElement('span'); 
-    span.textContent = `${task.status ? true === '✔' : '⬛'}`;
+    const spanStatus = document.createElement('span'); 
+    spanStatus.textContent = `${task.status ? '✔' : '⬛'}`;
+    spanStatus.addEventListener('click', async (e) => {
+        e.preventDefault();
+        await updateTask(task.id, { status: !task.status });
+        onLoad();
+    });
     
-    div.append(p, createdAt, span);
+    div.append(p, createdAt, spanStatus);
     return div;
 }
 
