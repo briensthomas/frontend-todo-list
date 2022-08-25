@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-const BASE_URL = 'http://localhost:7890';
+const BASE_URL = 'https://brien-todo-list.herokuapp.com/';
 
 // User auth/redirect functions
 
