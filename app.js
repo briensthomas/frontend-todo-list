@@ -20,6 +20,7 @@ signUpForm.addEventListener('submit', async (e) => {
     });
 });
 
+
 signInForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const formData = new FormData(signInForm);
