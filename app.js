@@ -20,7 +20,7 @@ signUpForm.addEventListener('submit', async (e) => {
     });
 });
 
-//Forest broke it
+
 signInForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const formData = new FormData(signInForm);
